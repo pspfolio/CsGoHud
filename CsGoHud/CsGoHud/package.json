@@ -1,0 +1,10 @@
+{
+  "name": "CsGoHud",
+  "version": "0.0.0",
+  "description": "CsGoHud",
+  "main": "server.js",
+  "author": {
+    "name": "PeppeS",
+    "email": ""
+  }
+}

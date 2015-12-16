@@ -1,0 +1,24 @@
+﻿BACKEND
+
+	STEP 1
+	Handle incoming data from Game State Integration -> step. 1
+	Save data to variable -> step. 1 -> 
+
+	When step 1 ready -> console.log data.
+
+	STEP2
+	Serve that data via ajax call. step. 2
+
+
+FRONTEND
+	STEP 2
+	Interval spam to Backend step 2.
+
+	after step 2 console.log data in frontend
+
+	STEP 3
+	If bomb is planted start timer step 3.
+
+	STEP 4
+	Show timer with colors step 4.
+	Signal if under 4 sec -> can't defuse step 4.
