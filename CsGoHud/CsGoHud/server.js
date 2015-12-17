@@ -1,5 +1,4 @@
 ﻿var http = require('http');
-var fs = require('fs');
 var port = process.env.port || 1337;
 
 var CsGoHudInfo = {
@@ -17,12 +16,11 @@ http.createServer(function (req, res) {
 		
 		req.on('end', function () {
 			var data = JSON.parse(body);
-			console.log(data);
-			// If round have property bomb -> bomb is planted
 			if (data.hasOwnProperty('round')) {
 				CsGoHudInfo.bombPlanted = data.round.hasOwnProperty('bomb') && data.round.bomb === 'planted' ? true : false;
 				CsGoHudInfo.roundLive = data.round.phase === 'live' ? true : false;
 			}
+
 			res.writeHead(200);
 			res.end('');
 		});

@@ -5,10 +5,8 @@
 	<meta charset="utf-8" />
 </head>
 <body>
-	<h1>CS:GO BombTimer</h1>
-
 	<div class="time">
-		<p class="seconds" style="font-size:4em;"></p>
+		<p class="seconds" style="font-size:300px; text-align: center"></p>
 	</div>
 
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -23,11 +21,14 @@
 					var self = this;
 					this.clockIsTicking = true;
 					var sec = self.bombTimer / 1000;
+
+					// updating timer once per second
+					// setting interval to timer property -> because we need to clear interval after round is over
 					this.timer = setInterval(function () {
 						$('.seconds').text(sec);
 						sec -= 1;
 						if (sec < 1) {
-							window.clearInterval(timer);
+							self.clearTimer();
 						}
 					}, 1000);
 				},
