@@ -16,34 +16,37 @@
 		$(document).ready(function () {
 
 			var CsGoHud = {
-				bombTimer : 40000,
-				startTimer: function () {
+				bombTimer: 40000,
+				clockIsTicking: false,
+				timer : undefined,
+				startTimer : function () {
 					var self = this;
-					var bombTimer = setInterval(function () {
-						var sec = self.bombTimer / 1000;
-
+					this.clockIsTicking = true;
+					var sec = self.bombTimer / 1000;
+					this.timer = setInterval(function () {
 						$('.seconds').text(sec);
-						self.bombTimer -= 1000;
-						if (self.bombTimer < 1000) {
-							window.clearInterval(bombTimer);
+						sec -= 1;
+						if (sec < 1) {
+							window.clearInterval(timer);
 						}
 					}, 1000);
+				},
+				clearTimer: function () {
+					window.clearInterval(this.timer);
+					this.clockIsTicking = false;
+					$('.seconds').text(this.bombTimer / 1000);
 				}
 			}
 
 			var dataInterval = setInterval(function () {
 				$.get('http://localhost:1337', function (data) {
-					if (data && data.bombPlanted) {
-						initTimer();
+					if (data && data.roundLive && data.bombPlanted && !CsGoHud.clockIsTicking) {
+						CsGoHud.startTimer();
+					} else if (data && !data.roundLive) {
+						CsGoHud.clearTimer();
 					}
 				})
 			}, 100);
-
-			function initTimer() {
-				window.clearInterval(dataInterval);
-				var hud = Object.create(CsGoHud);
-				hud.startTimer();
-			}
 
 		});
 	</script>
