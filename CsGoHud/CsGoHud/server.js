@@ -16,12 +16,17 @@ http.createServer(function (req, res) {
 		
 		req.on('end', function () {
 			var data = JSON.parse(body);
+			console.log(data);
 			// If round have property bomb -> bomb is planted
 			CsGoHudInfo.bombPlanted = (data.hasOwnProperty('round') && data.round.hasOwnProperty('bomb')) ? true : false;
-			res.writeHead(200, { 'Content-Type' : 'text/html' });
+			res.writeHead(200);
 			res.end('');
 		});
 	} else if (req.method === 'GET') {
+		res.setHeader('Access-Control-Allow-Origin', '*');
+		res.setHeader('Access-Control-Request-Method', '*');
+		res.setHeader('Access-Control-Allow-Headers', '*');
+		res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
 		res.writeHead(200, { 'Content-Type' : 'application/json' });
 		res.end(JSON.stringify(CsGoHudInfo));
 	} 

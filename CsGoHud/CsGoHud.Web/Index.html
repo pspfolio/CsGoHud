@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+	<h1>CS:GO BombTimer</h1>
+
+	<div class="time">
+		<p class="seconds" style="font-size:4em;"></p>
+	</div>
+
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script>
+		$(document).ready(function () {
+
+			var CsGoHud = {
+				bombTimer : 40000,
+				startTimer: function () {
+					var self = this;
+					var bombTimer = setInterval(function () {
+						var sec = self.bombTimer / 1000;
+
+						$('.seconds').text(sec);
+						self.bombTimer -= 1000;
+						if (self.bombTimer < 1000) {
+							window.clearInterval(bombTimer);
+						}
+					}, 1000);
+				}
+			}
+
+			var dataInterval = setInterval(function () {
+				$.get('http://localhost:1337', function (data) {
+					if (data && data.bombPlanted) {
+						initTimer();
+					}
+				})
+			}, 100);
+
+			function initTimer() {
+				window.clearInterval(dataInterval);
+				var hud = Object.create(CsGoHud);
+				hud.startTimer();
+			}
+
+		});
+	</script>
+</body>
+</html>
